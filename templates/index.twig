@@ -1,0 +1,8 @@
+{% extends 'layout.twig' %}
+{% block main %}
+<ul>
+{% for property in properties %}
+<li>{{ property.id }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

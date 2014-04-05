@@ -1,0 +1,12 @@
+{
+    "require": {
+        "doctrine/dbal": "~2.4",
+        "silex/silex": "~1.2",
+        "twig/twig": "~1.10"
+    },
+    "autoload": {
+        "psr-0": {
+            "PropertyExplorer\\": "src"
+        }
+    }
+}

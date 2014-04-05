@@ -1,0 +1,42 @@
+#register-form {
+  margin: 80px auto 20px;
+  max-width: 400px;
+  display: block;
+  background-color: #f7f7f7;
+  -moz-box-shadow: 0 0 1px 1px #777;
+    -webkit-box-shadow: 0 0 1px 1px #777;
+	box-shadow: 0 0 1px 1px #777;
+  border-radius: 2px;
+}
+
+.heading-desc {
+  color: #4c4c4c;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 38px 38px 0px 38px;
+}
+
+.main {
+  padding: 38px;
+}
+
+#register-form .main .form-control {
+  margin-bottom: 10px;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.register-footer {
+  background: #f0f0f0;
+  margin: 0 auto;
+  border-top: 1px solid #dadada;
+  padding: 20px;
+}
+
+.register-footer .left-section a {
+  font-weight: bold;
+  color: #8a8a8a;
+  line-height: 19px;
+}

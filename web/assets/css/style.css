@@ -1,0 +1,42 @@
+.navbar-nav {
+  float: right;
+}
+
+form#category-select {
+  padding: 2em 0 .5em;
+}
+
+#category-select input[type=text] {
+  width: 350px;
+}
+
+table#category-list td {
+  padding: .5em 3.5em .5em 1.5em;
+}
+
+h2#label {
+  margin-left: .6em;
+}
+
+div#description {
+  padding: 1em 2em 0;
+}
+
+#item-edit #_description,
+.desc-text {
+  max-width: 600px;
+  margin-right: 1em;
+  float: left;
+}
+
+div#snippet {
+  margin-top: 4.5em;
+  padding: 1.5em;
+  background: #eee;
+  width: 350px;
+}
+
+span.edit-link {
+  float: left;
+  margin-left: .6em;
+}
