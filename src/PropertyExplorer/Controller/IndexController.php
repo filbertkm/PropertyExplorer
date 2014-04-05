@@ -2,7 +2,7 @@
 
 namespace PropertyExplorer\Controller;
 
-use PropertyExplorer\Store\PropertyStore;
+use PropertyExplorer\Store\PropertyInfoStore;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 
@@ -10,7 +10,7 @@ class IndexController implements ControllerProviderInterface {
 
 	private $propertyStore;
 
-	public function __construct( PropertyStore $propertyStore ) {
+	public function __construct( PropertyInfoStore $propertyStore ) {
 		$this->propertyStore = $propertyStore;
 	}
 
@@ -23,12 +23,12 @@ class IndexController implements ControllerProviderInterface {
 	}
 
 	public function indexDisplay( Application $app ) {
-		$rows = $this->propertyStore->getProperties();
+		$properties = $this->propertyStore->getProperties();
 
 		return $app['twig']->render(
 			'index.twig',
 			array(
-				'properties' => $rows
+				'properties' => $properties
 			)
 		);
 	}

@@ -2,7 +2,8 @@
     "require": {
         "doctrine/dbal": "~2.4",
         "silex/silex": "~1.2",
-        "twig/twig": "~1.10"
+        "twig/twig": "~1.10",
+        "wikibase/data-model": "~0.7.2"
     },
     "autoload": {
         "psr-0": {
