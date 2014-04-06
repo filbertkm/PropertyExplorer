@@ -15,7 +15,7 @@ class PropertyInfoStore {
 		$this->entityLookup = $entityLookup;
 	}
 
-	public function getProperties() {
+	public function getPropertyInfo() {
 		$rows = $this->getPropertyInfoRows();
 		$properties = $this->convertPropertyInfoRowsToParams( $rows );
 

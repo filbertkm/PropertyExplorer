@@ -8,10 +8,10 @@ use Silex\ControllerProviderInterface;
 
 class IndexController implements ControllerProviderInterface {
 
-	private $propertyStore;
+	private $propertyInfoStore;
 
-	public function __construct( PropertyInfoStore $propertyStore ) {
-		$this->propertyStore = $propertyStore;
+	public function __construct( PropertyInfoStore $propertyInfoStore ) {
+		$this->propertyStore = $propertyInfoStore;
 	}
 
 	public function connect( Application $app ) {
@@ -23,7 +23,7 @@ class IndexController implements ControllerProviderInterface {
 	}
 
 	public function indexDisplay( Application $app ) {
-		$properties = $this->propertyStore->getProperties();
+		$properties = $this->propertyInfoStore->getPropertyInfo();
 
 		return $app['twig']->render(
 			'index.twig',
