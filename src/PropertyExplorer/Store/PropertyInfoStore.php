@@ -23,32 +23,58 @@ class PropertyInfoStore {
 	}
 
 	private function getPropertyInfoRows() {
-		$termSql = $this->buildTermSql();
-
 		$sql = $this->buildPropertyInfoSql();
-		$rows = $this->db->fetchAll( $sql, array( 'label', 'property', 'en' ) );
+
+		$rows = $this->db->fetchAll(
+			$sql,
+			array(
+				'description',
+				'property',
+				'en',
+				'label',
+				'property',
+				'en'
+			)
+		);
 
 		return $rows;
 	}
 
 	private function buildTermSql() {
-        $termQueryBuilder = $this->db->createQueryBuilder();
-        $termQueryBuilder->select( 'term_text', 'term_entity_id' )
+		$descSql = $this->buildTermDescriptionSql();
+
+		$termQueryBuilder = $this->db->createQueryBuilder();
+		$termQueryBuilder->select(
+				'terms.term_text as label',
+				'terms.term_entity_id',
+				'description'
+			)
             ->from ( 'wb_terms', 'terms' )
-            ->where( 'terms.term_type = ?' )
-            ->andWhere( 'terms.term_entity_type = ?' )
+			->leftJoin( 'terms', "( $descSql )", 'description',
+				'terms.term_entity_id = description.term_entity_id' )
+			->where( 'terms.term_type = ?' )
+			->andWhere( 'terms.term_entity_type = ?' )
             ->andWhere( 'terms.term_language = ?' );
 
-        $termSql = $termQueryBuilder->getSql();
+		return $termQueryBuilder->getSql();
+	}
 
-		return $termSql;
+	private function buildTermDescriptionSql() {
+		$termQueryBuilder = $this->db->createQueryBuilder();
+		$termQueryBuilder->select( 'term_text as description', 'term_entity_id' )
+			->from( 'wb_terms', 'terms' )
+			->where( 'terms.term_type = ?' )
+			->andWhere( 'terms.term_entity_type = ?' )
+			->andWhere( 'terms.term_language = ?' );
+
+		return $termQueryBuilder->getSql();
 	}
 
 	private function buildPropertyInfoSql() {
 		$termSql = $this->buildTermSql();
 
         $queryBuilder = $this->db->createQueryBuilder();
-        $queryBuilder->select( 'pi_property_id as id', 'pi_type as type', 'term_text as label' )
+        $queryBuilder->select( 'pi_property_id as id', 'pi_type as type', 'label', 'description' )
             ->from( 'wb_property_info', 'pi' )
             ->leftJoin( 'pi', "( $termSql )", 'term', 'term.term_entity_id = pi.pi_property_id' )
             ->orderBy( 'id' )
@@ -72,13 +98,15 @@ class PropertyInfoStore {
 
 	private function getPropertyParamsFromRow( array $row ) {
 		$propertyId = $this->getPropertyIdFromRow( $row );
-		$label = $row['label'];
 		$propertyType = $row['type'];
+		$label = $row['label'];
+		$description = $row['description'];
 
 		$info = array(
 			'id' => $propertyId->getSerialization(),
+			'type' => $propertyType ? $propertyType : '-',
 			'label' => $label ? $label : '-',
-			'type' => $propertyType ? $propertyType : '-'
+			'description' => $description ? $description : '-'
 		);
 
 		return $info;
