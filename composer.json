@@ -1,9 +1,16 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/filbertkm/WikiClient.git"
+        }
+    ],
     "require": {
         "doctrine/dbal": "~2.4",
         "silex/silex": "~1.2",
         "twig/twig": "~1.10",
-        "wikibase/data-model": "~0.7.2"
+        "wikibase/data-model": "~0.7.2",
+        "wikiclient/wikiclient": "~0.1"
     },
     "autoload": {
         "psr-0": {

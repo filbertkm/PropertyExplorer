@@ -1,8 +1,12 @@
 {% extends 'layout.twig' %}
 {% block main %}
-<ul>
+<table id='property-list'>
 {% for property in properties %}
-<li>{{ property.id }}</li>
+<tr>
+<td class='property-id'>{{ property.id }}</td>
+<td class='property-label'>{{ property.label }}</td>
+<td class='property-type'>{{ property.type }}</td>
+</tr>
 {% endfor %}
-</ul>
+</table>
 {% endblock %}
