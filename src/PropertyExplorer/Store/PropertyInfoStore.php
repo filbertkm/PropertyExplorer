@@ -49,12 +49,12 @@ class PropertyInfoStore {
 				'terms.term_entity_id',
 				'description'
 			)
-            ->from ( 'wb_terms', 'terms' )
+			->from ( 'wb_terms', 'terms' )
 			->leftJoin( 'terms', "( $descSql )", 'description',
 				'terms.term_entity_id = description.term_entity_id' )
 			->where( 'terms.term_type = ?' )
 			->andWhere( 'terms.term_entity_type = ?' )
-            ->andWhere( 'terms.term_language = ?' );
+			->andWhere( 'terms.term_language = ?' );
 
 		return $termQueryBuilder->getSql();
 	}
@@ -73,15 +73,15 @@ class PropertyInfoStore {
 	private function buildPropertyInfoSql() {
 		$termSql = $this->buildTermSql();
 
-        $queryBuilder = $this->db->createQueryBuilder();
-        $queryBuilder->select( 'pi_property_id as id', 'pi_type as type', 'label', 'description' )
-            ->from( 'wb_property_info', 'pi' )
-            ->leftJoin( 'pi', "( $termSql )", 'term', 'term.term_entity_id = pi.pi_property_id' )
-            ->orderBy( 'id' )
-            ->setFirstResult( 0 )
-            ->setMaxResults( 25 );
+		$queryBuilder = $this->db->createQueryBuilder();
+		$queryBuilder->select( 'pi_property_id as id', 'pi_type as type', 'label', 'description' )
+			->from( 'wb_property_info', 'pi' )
+			->leftJoin( 'pi', "( $termSql )", 'term', 'term.term_entity_id = pi.pi_property_id' )
+			->orderBy( 'id' )
+			->setFirstResult( 0 )
+			->setMaxResults( 25 );
 
-        $sql = $queryBuilder->getSql();
+		$sql = $queryBuilder->getSql();
 
 		return $sql;
 	}
