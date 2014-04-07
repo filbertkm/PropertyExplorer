@@ -33,28 +33,4 @@ class IndexController implements ControllerProviderInterface {
 		);
 	}
 
-	public function indexForm( Application $app ) {
-		$data = array(
-			'category' => ''
-		);
-
-		$form = $app['form.factory']->createBuilder( 'form', $data )
-			->add( 'category' )
-			->getForm();
-
-		$form->handleRequest( $app['request'] );
-
-		if ( $form->isValid() ) {
-			$data = $form->getData();
-			return $app->redirect( '/category/' . $data['category'] );
-		}
-
-		return $app['twig']->render(
-			'index_form.twig',
-			array(
-				'form' => $form->createView()
-			)
-		);
-	}
-
 }
