@@ -15,15 +15,15 @@ class PropertyInfoStore {
 		$this->entityLookup = $entityLookup;
 	}
 
-	public function getPropertyInfo() {
-		$rows = $this->getPropertyInfoRows();
+	public function getPropertyInfo( $minId = 0, $maxResults = 50 ) {
+		$rows = $this->getPropertyInfoRows( $minId, $maxResults );
 		$properties = $this->convertPropertyInfoRowsToParams( $rows );
 
 		return $properties;
 	}
 
-	private function getPropertyInfoRows() {
-		$sql = $this->buildPropertyInfoSql();
+	private function getPropertyInfoRows( $minId, $maxResults ) {
+		$sql = $this->buildPropertyInfoSql( $maxResults );
 
 		$rows = $this->db->fetchAll(
 			$sql,
@@ -33,7 +33,8 @@ class PropertyInfoStore {
 				'en',
 				'label',
 				'property',
-				'en'
+				'en',
+				(int)$minId
 			)
 		);
 
@@ -70,7 +71,7 @@ class PropertyInfoStore {
 		return $termQueryBuilder->getSql();
 	}
 
-	private function buildPropertyInfoSql() {
+	private function buildPropertyInfoSql( $max ) {
 		$termSql = $this->buildTermSql();
 
 		$queryBuilder = $this->db->createQueryBuilder();
@@ -78,8 +79,9 @@ class PropertyInfoStore {
 			->from( 'wb_property_info', 'pi' )
 			->leftJoin( 'pi', "( $termSql )", 'term', 'term.term_entity_id = pi.pi_property_id' )
 			->orderBy( 'id' )
+			->where( 'pi.pi_property_id >= ?' )
 			->setFirstResult( 0 )
-			->setMaxResults( 25 );
+			->setMaxResults( (int)$max );
 
 		$sql = $queryBuilder->getSql();
 
